@@ -1,0 +1,8 @@
+{
+  "appId": "fr.lacordedesol.accordeur",
+  "appName": "La Corde de Sol",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}

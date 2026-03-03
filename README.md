@@ -25,7 +25,7 @@ Accordeur & carte des positions de contrebasse — application web mobile.
 
 | Commit | Description |
 |--------|-------------|
-| `en cours` | v1.3 — canvas plus large, noms EN, suppression sections distance/doigtés |
+| `75c56fd` | v1.3 — canvas plus large, noms EN, suppression sections distance/doigtés |
 | `83b80c3` | v1.2 — sillet zone prend la moitié du canvas |
 | `78e6bda` | v1.1 — numéro de version à la place de la date |
 | `fe627f6` | Fix : alignement boutons mode et sélecteur Hz à 32 px |

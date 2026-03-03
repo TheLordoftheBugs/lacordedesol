@@ -94,7 +94,8 @@ html, body {
 
 .btn-group { display: flex; gap: 4px; }
 .btn-mode {
-  padding: 5px 12px;
+  padding: 0 12px;
+  height: 32px;
   border: 1px solid var(--border);
   background: var(--bg3);
   color: var(--text2);
@@ -116,7 +117,8 @@ html, body {
   border: 1px solid var(--border);
   color: var(--text);
   border-radius: 20px;
-  padding: 5px 34px 5px 14px;
+  padding: 0 34px 0 14px;
+  height: 32px;
   font-size: .8rem;
   font-family: inherit;
   cursor: pointer;

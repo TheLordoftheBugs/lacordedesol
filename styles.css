@@ -40,7 +40,7 @@ html, body {
 .app-header {
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
-  padding: 12px 16px 0;
+  padding: 12px 16px;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -50,35 +50,23 @@ html, body {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 12px;
 }
 .logo-icon { font-size: 1.6rem; color: var(--accent); }
 .logo-text  { font-size: 1.1rem; font-weight: 700; letter-spacing: .02em; }
 
-.nav-tabs {
-  display: flex;
-  gap: 4px;
-}
-.nav-tab {
-  flex: 1;
-  padding: 10px;
-  background: none;
-  border: none;
-  border-bottom: 3px solid transparent;
-  color: var(--text2);
-  font-size: .95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color .2s, border-color .2s;
-}
-.nav-tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
+/* ── App sections ────────────────────────────────────────── */
+.app-section { display: flex; flex-direction: column; }
 
-/* ── Tab content ─────────────────────────────────────────── */
-.tab-content { display: none; flex: 1; flex-direction: column; }
-.tab-content.active { display: flex; }
+.section-title {
+  padding: 10px 16px 8px;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+}
 
 /* ── Tuner Settings bar ──────────────────────────────────── */
 .tuner-settings {
@@ -136,12 +124,10 @@ html, body {
 
 /* ── Tuner Main ──────────────────────────────────────────── */
 .tuner-main {
-  flex: 1;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  overflow-y: auto;
 }
 
 /* Note display */
@@ -400,8 +386,7 @@ html, body {
 
 .positions-layout {
   display: flex;
-  flex: 1;
-  overflow: hidden;
+  height: 620px;
   gap: 0;
 }
 

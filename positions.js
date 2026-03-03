@@ -7,6 +7,7 @@ const Positions = (() => {
 
   // ── Note frequency helpers ───────────────────────────
   const NOTE_FR = ['Do','Do#','Ré','Ré#','Mi','Fa','Fa#','Sol','Sol#','La','La#','Si'];
+  const NOTE_EN = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 
   function midiToFreq(midi, aRef = 440) {
     return aRef * Math.pow(2, (midi - 69) / 12);
@@ -14,6 +15,10 @@ const Positions = (() => {
   function midiToName(midi) {
     const oct = Math.floor(midi / 12) - 1;
     return NOTE_FR[((midi % 12) + 12) % 12] + oct;
+  }
+  function midiToNameEN(midi) {
+    const oct = Math.floor(midi / 12) - 1;
+    return NOTE_EN[((midi % 12) + 12) % 12] + oct;
   }
 
   // ── String open MIDI numbers ─────────────────────────
@@ -138,7 +143,7 @@ const Positions = (() => {
   ];
 
   // ── Canvas layout constants ───────────────────────────
-  const NECK_WIDTH  = 130;
+  const NECK_WIDTH  = 180;
   const POS_HEIGHT  = 72;   // px per position block
   const POS_TOTAL   = POSITION_DATA.length * POS_HEIGHT; // 576px
   const NUT_HEIGHT  = POS_TOTAL;  // sillet zone = same height → exactly half the canvas
@@ -193,20 +198,26 @@ const Positions = (() => {
     // Open string label (corde à vide)
     const openMidi = OPEN_MIDI[currentStr];
     const openName = midiToName(openMidi);
+    const openNameEN = midiToNameEN(openMidi);
     const openFreq = Math.round(midiToFreq(openMidi) * 10) / 10;
+    const baseY = NUT_HEIGHT * 0.26;
 
     ctx2d.fillStyle = '#d4c5a9';
     ctx2d.font = 'bold 42px sans-serif';
     ctx2d.textAlign = 'center';
-    ctx2d.fillText(openName, W / 2, NUT_HEIGHT * 0.30);
+    ctx2d.fillText(openName, W / 2, baseY);
+
+    ctx2d.fillStyle = 'rgba(210,190,110,0.85)';
+    ctx2d.font = 'bold 18px sans-serif';
+    ctx2d.fillText(openNameEN, W / 2, baseY + 26);
 
     ctx2d.fillStyle = 'rgba(180,170,210,0.7)';
     ctx2d.font = '12px sans-serif';
-    ctx2d.fillText('corde à vide', W / 2, NUT_HEIGHT * 0.30 + 20);
+    ctx2d.fillText('corde à vide', W / 2, baseY + 46);
 
     ctx2d.fillStyle = 'rgba(140,210,140,0.85)';
     ctx2d.font = 'bold 13px sans-serif';
-    ctx2d.fillText(openFreq + ' Hz', W / 2, NUT_HEIGHT * 0.30 + 40);
+    ctx2d.fillText(openFreq + ' Hz', W / 2, baseY + 64);
 
     // Open string circle on string line (drawn here so it appears above the neck wood)
     ctx2d.beginPath();
@@ -220,12 +231,6 @@ const Positions = (() => {
     ctx2d.font = 'bold 10px sans-serif';
     ctx2d.textAlign = 'center';
     ctx2d.fillText('O', neckL + neckW * 0.55, NUT_HEIGHT * 0.65 + 4);
-
-    // Distance info
-    ctx2d.fillStyle = 'rgba(130,120,160,0.8)';
-    ctx2d.font = '9px sans-serif';
-    ctx2d.fillText('0 cm — tête de manche', W / 2, NUT_HEIGHT * 0.85);
-    ctx2d.fillText('corde ' + currentStr, W / 2, NUT_HEIGHT * 0.85 + 14);
 
     // Nut bar (at bottom of sillet zone)
     ctx2d.fillStyle = '#d4c5a9';
@@ -271,15 +276,17 @@ const Positions = (() => {
 
       // Notes for this position on current string
       const notes = getPositionNotes(pos, currentStr);
-      const noteNames = notes.map(n => n.name).join(' ');
       ctx2d.fillStyle = 'rgba(220,220,240,0.7)';
       ctx2d.font = '8px sans-serif';
-      ctx2d.fillText(noteNames, neckL + 6, y + 30);
+      ctx2d.fillText(notes.map(n => n.name).join(' '), neckL + 6, y + 30);
+      ctx2d.fillStyle = 'rgba(210,190,110,0.7)';
+      ctx2d.font = '7px sans-serif';
+      ctx2d.fillText(notes.map(n => n.nameEN).join(' '), neckL + 6, y + 41);
 
       // Finger dots (visual markers mode or selected)
       if (visualMode || isSelected) {
         pos.fingering.forEach((f, fi) => {
-          const dotY = y + 42 + fi * 10;
+          const dotY = y + 50 + fi * 8;
           if (dotY > y + POS_HEIGHT - 4) return;
           ctx2d.beginPath();
           ctx2d.arc(strX, dotY, 4, 0, Math.PI * 2);
@@ -323,6 +330,7 @@ const Positions = (() => {
         semitone: f.semitone,
         midi,
         name: midiToName(midi),
+        nameEN: midiToNameEN(midi),
         freq: Math.round(midiToFreq(midi, aRef) * 10) / 10,
       };
     });

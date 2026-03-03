@@ -237,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const notesHTML = notes.map(n => `
       <div class="note-card" data-freq="${n.freq}" data-name="${n.name}">
         <div class="note-card-name">${n.name}</div>
+        <div class="note-card-name-en">${n.nameEN}</div>
         <div class="note-card-freq">${n.freq} Hz</div>
         <div class="note-card-finger">Doigt ${n.finger}</div>
       </div>`).join('');
@@ -255,18 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <div class="detail-card">
-        <div class="detail-card-title">Doigtés</div>
-        <div class="fingering-row">${fingerHTML}</div>
-      </div>
-
-      <div class="detail-card">
-        <div class="detail-card-title">Repère de distance</div>
-        <div class="distance-info">
-          <span>📏</span>
-          <span><strong>${pos.distanceInfo}</strong></span>
-        </div>
-      </div>
     `;
 
     // Note card click → play audio

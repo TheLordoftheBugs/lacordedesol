@@ -408,7 +408,7 @@ html, body {
 /* Neck canvas */
 .neck-container {
   position: relative;
-  width: 130px;
+  width: 180px;
   flex-shrink: 0;
   background: var(--bg2);
   border-right: 1px solid var(--border);
@@ -510,7 +510,8 @@ html, body {
   from { box-shadow: 0 0 0 0 rgba(39,174,96,0); }
   to   { box-shadow: 0 0 0 6px rgba(39,174,96,.25); }
 }
-.note-card-name   { font-size: 1.1rem; font-weight: 700; }
+.note-card-name    { font-size: 1.1rem; font-weight: 700; }
+.note-card-name-en { font-size: .75rem; color: #d4b86a; font-weight: 600; }
 .note-card-freq   { font-size: .65rem; color: var(--text2); margin-top: 2px; }
 .note-card-finger { font-size: .7rem; color: var(--accent); margin-top: 3px; font-weight: 600; }
 

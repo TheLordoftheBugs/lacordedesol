@@ -53,11 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (letter === lastPosStr) return;
     lastPosStr = letter;
     Positions.setString(letter);
-    detailPanel.innerHTML = `
-      <div class="detail-placeholder">
-        <div class="detail-icon">👆</div>
-        <p>Tapez sur une position<br/>pour voir les détails</p>
-      </div>`;
+    renderOpenString(letter);
   }
 
   document.querySelectorAll('.string-btn').forEach(btn => {
@@ -205,6 +201,44 @@ document.addEventListener('DOMContentLoaded', () => {
   Positions.init(neckCanvas, detailPanel, (posData, notes) => {
     renderDetail(posData, notes);
   });
+  renderOpenString('G');
+
+  // ── Render open string (default state) ───────────────
+  function renderOpenString(str) {
+    const note = Positions.getOpenStringNote(str);
+    detailPanel.innerHTML = `
+      <div class="detail-header">
+        <div class="detail-pos-name">Aucune position sélectionnée</div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-card-title">Corde à vide</div>
+        <div class="notes-grid">
+          <div class="note-card" data-freq="${note.freq}" data-name="${note.name}">
+            <div class="note-card-name">${note.name}</div>
+            <div class="note-card-name-en">${note.nameEN}</div>
+            <div class="note-card-freq">${note.freq} Hz</div>
+            <div class="note-card-finger">Corde à vide</div>
+          </div>
+        </div>
+        <div style="font-size:.72rem;color:var(--text2);margin-top:8px;">
+          Tapez une note pour écouter la référence
+        </div>
+      </div>`;
+    detailPanel.querySelectorAll('.note-card').forEach(card => {
+      card.addEventListener('click', () => {
+        if (playingCard) playingCard.classList.remove('playing');
+        AudioPlayer.stop();
+        if (playingCard === card) { playingCard = null; return; }
+        card.classList.add('playing');
+        playingCard = card;
+        AudioPlayer.playFreq(parseFloat(card.dataset.freq), 3, currentMode);
+        setTimeout(() => {
+          card.classList.remove('playing');
+          if (playingCard === card) playingCard = null;
+        }, 3100);
+      });
+    });
+  }
 
   // ── Render position detail ────────────────────────────
   function renderDetail(pos, notes) {

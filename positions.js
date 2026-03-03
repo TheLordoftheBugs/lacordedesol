@@ -377,5 +377,14 @@ const Positions = (() => {
     return POSITION_DATA.find(p => p.id === id) || null;
   }
 
-  return { init, setString, setVisualMarkers, getPositionNotes, getPositionDataById, POSITION_DATA };
+  function getOpenStringNote(str, aRef = 440) {
+    const midi = OPEN_MIDI[str];
+    return {
+      name:   midiToName(midi),
+      nameEN: midiToNameEN(midi),
+      freq:   Math.round(midiToFreq(midi, aRef) * 10) / 10,
+    };
+  }
+
+  return { init, setString, setVisualMarkers, getPositionNotes, getPositionDataById, getOpenStringNote, POSITION_DATA };
 })();

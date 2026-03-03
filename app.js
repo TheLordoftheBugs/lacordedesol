@@ -46,11 +46,26 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── String selector ──────────────────────────────────
+  let lastPosStr = 'G';
+
+  function syncPosString(str) {
+    const letter = str[0]; // "E1"→"E", "G2"→"G", etc.
+    if (letter === lastPosStr) return;
+    lastPosStr = letter;
+    Positions.setString(letter);
+    detailPanel.innerHTML = `
+      <div class="detail-placeholder">
+        <div class="detail-icon">👆</div>
+        <p>Tapez sur une position<br/>pour voir les détails</p>
+      </div>`;
+  }
+
   document.querySelectorAll('.string-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.string-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       Tuner.setTargetString(btn.dataset.string);
+      syncPosString(btn.dataset.string);
     });
   });
 
@@ -123,11 +138,12 @@ document.addEventListener('DOMContentLoaded', () => {
     stabilityFill.style.width = pct + '%';
     stabilityAvg.textContent = `Moy. : ${avgCents >= 0 ? '+' : ''}${avgCents} ¢`;
 
-    // Sync string button highlight
+    // Sync string button highlight + positions module
     if (info.string) {
       document.querySelectorAll('.string-btn').forEach(b => {
         b.classList.toggle('active', b.dataset.string === info.string);
       });
+      syncPosString(info.string);
     }
   });
 
@@ -189,21 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   Positions.init(neckCanvas, detailPanel, (posData, notes) => {
     renderDetail(posData, notes);
-  });
-
-  // String selector for positions
-  document.querySelectorAll('.pos-string-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.pos-string-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      Positions.setString(btn.dataset.str);
-      // Clear detail
-      detailPanel.innerHTML = `
-        <div class="detail-placeholder">
-          <div class="detail-icon">👆</div>
-          <p>Tapez sur une position<br/>pour voir les détails</p>
-        </div>`;
-    });
   });
 
   // Visual markers toggle

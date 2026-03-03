@@ -17,163 +17,159 @@
       </div>
     </header>
 
-    <!-- MODULE 1 : ACCORDEUR -->
-    <section id="tab-tuner" class="app-section">
+    <!-- Deux colonnes -->
+    <div class="content-row">
 
-      <div class="section-title">Accordeur</div>
+      <!-- MODULE 1 : ACCORDEUR -->
+      <section id="tab-tuner" class="app-section">
 
-      <!-- Settings bar -->
-      <div class="tuner-settings">
-        <div class="setting-group">
-          <label>La de référence</label>
-          <select id="ref-hz-select" class="ref-hz-select">
-            <option value="438">438 Hz</option>
-            <option value="439">439 Hz</option>
-            <option value="440" selected>440 Hz</option>
-            <option value="441">441 Hz</option>
-            <option value="442">442 Hz</option>
-            <option value="443">443 Hz</option>
-            <option value="444">444 Hz</option>
-            <option value="445">445 Hz</option>
-            <option value="446">446 Hz</option>
-            <option value="447">447 Hz</option>
-            <option value="448">448 Hz</option>
-            <option value="449">449 Hz</option>
-            <option value="450">450 Hz</option>
-          </select>
-        </div>
-        <div class="setting-group">
-          <label>Mode</label>
-          <div class="btn-group">
-            <button class="btn-mode active" data-mode="pizzicato">🤌 Pizz.</button>
-            <button class="btn-mode" data-mode="arco">🎻 Archet</button>
+        <div class="section-title">Accordeur</div>
+
+        <!-- Settings bar -->
+        <div class="tuner-settings">
+          <div class="setting-group">
+            <label>La de référence</label>
+            <select id="ref-hz-select" class="ref-hz-select">
+              <option value="438">438 Hz</option>
+              <option value="439">439 Hz</option>
+              <option value="440" selected>440 Hz</option>
+              <option value="441">441 Hz</option>
+              <option value="442">442 Hz</option>
+              <option value="443">443 Hz</option>
+              <option value="444">444 Hz</option>
+              <option value="445">445 Hz</option>
+              <option value="446">446 Hz</option>
+              <option value="447">447 Hz</option>
+              <option value="448">448 Hz</option>
+              <option value="449">449 Hz</option>
+              <option value="450">450 Hz</option>
+            </select>
           </div>
-        </div>
-      </div>
-
-      <!-- Main tuner display -->
-      <div class="tuner-main">
-
-        <!-- Detected note -->
-        <div class="note-display">
-          <div class="note-name" id="note-name">—</div>
-          <div class="note-freq" id="note-freq">— Hz</div>
-          <div class="string-label" id="string-label">Jouez une corde</div>
-        </div>
-
-        <!-- Needle meter -->
-        <div class="meter-container">
-          <div class="meter-scale">
-            <span class="scale-label flat">−50</span>
-            <span class="scale-label flat">−25</span>
-            <span class="scale-label center">0</span>
-            <span class="scale-label sharp">+25</span>
-            <span class="scale-label sharp">+50</span>
-          </div>
-          <div class="meter-arc">
-            <svg viewBox="0 0 300 160" class="meter-svg">
-              <path d="M 20 145 A 130 130 0 0 1 280 145" stroke="#1a1a2e" stroke-width="18" fill="none" stroke-linecap="round"/>
-              <path d="M 20 145 A 130 130 0 0 1 75 40" stroke="#e74c3c" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.4"/>
-              <path d="M 225 40 A 130 130 0 0 1 280 145" stroke="#e74c3c" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.4"/>
-              <path d="M 75 40 A 130 130 0 0 1 108 22" stroke="#e67e22" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.4"/>
-              <path d="M 192 22 A 130 130 0 0 1 225 40" stroke="#e67e22" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.4"/>
-              <path d="M 108 22 A 130 130 0 0 1 192 22" stroke="#27ae60" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.5"/>
-              <line x1="150" y1="15" x2="150" y2="35" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
-              <line id="needle" x1="150" y1="145" x2="150" y2="22"
-                stroke="#ffffff" stroke-width="3" stroke-linecap="round"
-                transform="rotate(0, 150, 145)"
-                style="transition: transform 0.15s ease-out;"/>
-              <circle cx="150" cy="145" r="7" fill="#ffffff"/>
-            </svg>
-          </div>
-          <div class="cents-display">
-            <span id="cents-value">0</span>
-            <span class="cents-unit">cents</span>
+          <div class="setting-group">
+            <label>Mode</label>
+            <div class="btn-group">
+              <button class="btn-mode active" data-mode="pizzicato">🤌 Pizz.</button>
+              <button class="btn-mode" data-mode="arco">🎻 Archet</button>
+            </div>
           </div>
         </div>
 
-        <!-- Tuning status -->
-        <div class="tuning-status" id="tuning-status">
-          <div class="status-indicator" id="status-indicator"></div>
-          <span id="status-text">En attente…</span>
-        </div>
+        <!-- Main tuner display -->
+        <div class="tuner-main">
 
-        <!-- Stability bar -->
-        <div class="stability-section">
-          <div class="stability-label">Stabilité</div>
-          <div class="stability-bar">
-            <div class="stability-fill" id="stability-fill"></div>
+          <!-- Detected note -->
+          <div class="note-display">
+            <div class="note-name" id="note-name">—</div>
+            <div class="note-freq" id="note-freq">— Hz</div>
+            <div class="string-label" id="string-label">Jouez une corde</div>
           </div>
-          <div class="stability-avg" id="stability-avg">Moy. : — ¢</div>
-        </div>
 
-        <!-- String selector -->
-        <div class="string-selector">
-          <div class="string-selector-label">Corde</div>
-          <div class="strings-row">
-            <button class="string-btn" data-string="E1"><span class="str-roman">IV</span><span class="str-note">Mi / E</span></button>
-            <button class="string-btn" data-string="A1"><span class="str-roman">III</span><span class="str-note">La / A</span></button>
-            <button class="string-btn" data-string="D2"><span class="str-roman">II</span><span class="str-note">Ré / D</span></button>
-            <button class="string-btn active" data-string="G2"><span class="str-roman">I</span><span class="str-note">Sol / G</span></button>
+          <!-- Needle meter -->
+          <div class="meter-container">
+            <div class="meter-scale">
+              <span class="scale-label flat">−50</span>
+              <span class="scale-label flat">−25</span>
+              <span class="scale-label center">0</span>
+              <span class="scale-label sharp">+25</span>
+              <span class="scale-label sharp">+50</span>
+            </div>
+            <div class="meter-arc">
+              <svg viewBox="0 0 300 160" class="meter-svg">
+                <path d="M 20 145 A 130 130 0 0 1 280 145" stroke="#1a1a2e" stroke-width="18" fill="none" stroke-linecap="round"/>
+                <path d="M 20 145 A 130 130 0 0 1 75 40" stroke="#e74c3c" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.4"/>
+                <path d="M 225 40 A 130 130 0 0 1 280 145" stroke="#e74c3c" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.4"/>
+                <path d="M 75 40 A 130 130 0 0 1 108 22" stroke="#e67e22" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.4"/>
+                <path d="M 192 22 A 130 130 0 0 1 225 40" stroke="#e67e22" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.4"/>
+                <path d="M 108 22 A 130 130 0 0 1 192 22" stroke="#27ae60" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.5"/>
+                <line x1="150" y1="15" x2="150" y2="35" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+                <line id="needle" x1="150" y1="145" x2="150" y2="22"
+                  stroke="#ffffff" stroke-width="3" stroke-linecap="round"
+                  transform="rotate(0, 150, 145)"
+                  style="transition: transform 0.15s ease-out;"/>
+                <circle cx="150" cy="145" r="7" fill="#ffffff"/>
+              </svg>
+            </div>
+            <div class="cents-display">
+              <span id="cents-value">0</span>
+              <span class="cents-unit">cents</span>
+            </div>
           </div>
-          <div class="auto-detect-row">
-            <label class="toggle-label">
-              <input type="checkbox" id="auto-detect" checked/>
-              <span class="toggle-switch"></span>
-              Détection automatique
-            </label>
+
+          <!-- Tuning status -->
+          <div class="tuning-status" id="tuning-status">
+            <div class="status-indicator" id="status-indicator"></div>
+            <span id="status-text">En attente…</span>
+          </div>
+
+          <!-- Stability bar -->
+          <div class="stability-section">
+            <div class="stability-label">Stabilité</div>
+            <div class="stability-bar">
+              <div class="stability-fill" id="stability-fill"></div>
+            </div>
+            <div class="stability-avg" id="stability-avg">Moy. : — ¢</div>
+          </div>
+
+          <!-- String selector -->
+          <div class="string-selector">
+            <div class="string-selector-label">Corde</div>
+            <div class="strings-row">
+              <button class="string-btn" data-string="E1"><span class="str-roman">IV</span><span class="str-note">Mi / E</span></button>
+              <button class="string-btn" data-string="A1"><span class="str-roman">III</span><span class="str-note">La / A</span></button>
+              <button class="string-btn" data-string="D2"><span class="str-roman">II</span><span class="str-note">Ré / D</span></button>
+              <button class="string-btn active" data-string="G2"><span class="str-roman">I</span><span class="str-note">Sol / G</span></button>
+            </div>
+            <div class="auto-detect-row">
+              <label class="toggle-label">
+                <input type="checkbox" id="auto-detect" checked/>
+                <span class="toggle-switch"></span>
+                Détection automatique
+              </label>
+            </div>
+          </div>
+
+          <!-- Microphone button -->
+          <button class="mic-btn" id="mic-btn">
+            <span class="mic-icon" id="mic-icon">🎙️</span>
+            <span id="mic-text">Activer le micro</span>
+          </button>
+
+          <div class="build-stamp" id="build-stamp"></div>
+
+        </div>
+      </section>
+
+      <!-- MODULE 2 : POSITIONS -->
+      <section id="tab-positions" class="app-section">
+
+        <div class="section-title">
+          <span>Positions</span>
+          <label class="toggle-label small">
+            <input type="checkbox" id="visual-markers-toggle"/>
+            <span class="toggle-switch"></span>
+            Repères visuels
+          </label>
+        </div>
+
+        <div class="positions-layout">
+          <!-- Neck visualization -->
+          <div class="neck-container">
+            <canvas id="neck-canvas"></canvas>
+            <div id="neck-tooltip" class="neck-tooltip hidden"></div>
+          </div>
+
+          <!-- Position detail panel -->
+          <div class="position-detail" id="position-detail">
+            <div class="detail-placeholder">
+              <div class="detail-icon">👆</div>
+              <p>Tapez sur une position<br/>pour voir les détails</p>
+            </div>
           </div>
         </div>
 
-        <!-- Microphone button -->
-        <button class="mic-btn" id="mic-btn">
-          <span class="mic-icon" id="mic-icon">🎙️</span>
-          <span id="mic-text">Activer le micro</span>
-        </button>
+      </section>
 
-        <div class="build-stamp" id="build-stamp"></div>
-
-      </div>
-    </section>
-
-    <!-- MODULE 2 : POSITIONS -->
-    <section id="tab-positions" class="app-section">
-
-      <div class="section-title">Positions</div>
-
-      <!-- String selector for positions -->
-      <div class="pos-string-bar">
-        <span class="pos-string-label">Corde :</span>
-        <div class="pos-string-btns">
-          <button class="pos-string-btn" data-str="E">Mi</button>
-          <button class="pos-string-btn" data-str="A">La</button>
-          <button class="pos-string-btn" data-str="D">Ré</button>
-          <button class="pos-string-btn active" data-str="G">Sol</button>
-        </div>
-        <label class="toggle-label small">
-          <input type="checkbox" id="visual-markers-toggle"/>
-          <span class="toggle-switch"></span>
-          Repères visuels
-        </label>
-      </div>
-
-      <div class="positions-layout">
-        <!-- Neck visualization -->
-        <div class="neck-container">
-          <canvas id="neck-canvas"></canvas>
-          <div id="neck-tooltip" class="neck-tooltip hidden"></div>
-        </div>
-
-        <!-- Position detail panel -->
-        <div class="position-detail" id="position-detail">
-          <div class="detail-placeholder">
-            <div class="detail-icon">👆</div>
-            <p>Tapez sur une position<br/>pour voir les détails</p>
-          </div>
-        </div>
-      </div>
-
-    </section>
+    </div><!-- .content-row -->
 
   </div><!-- #app -->
 

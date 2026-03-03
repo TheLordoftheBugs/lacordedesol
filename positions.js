@@ -140,10 +140,24 @@ const Positions = (() => {
       ],
       distanceInfo: '~18–21 cm du sillet',
     },
+    {
+      id: 'pos5',
+      label: '5e position',
+      sublabel: '5e pos.',
+      color: '#7f8c8d',
+      firstFingerSemitone: 10,
+      description: 'Position haute. Le 3ème doigt atteint le Sol3 sur la corde de Sol.',
+      fingering: [
+        { finger: 1, semitone: 10 },
+        { finger: 2, semitone: 11 },
+        { finger: 3, semitone: 12 },
+      ],
+      distanceInfo: '~22–25 cm du sillet',
+    },
   ];
 
   // ── Canvas layout constants ───────────────────────────
-  const NECK_WIDTH  = 180;
+  const NECK_WIDTH  = 220;
   const POS_HEIGHT  = 72;   // px per position block
   const POS_TOTAL   = POSITION_DATA.length * POS_HEIGHT; // 576px
   const NUT_HEIGHT  = 24;   // space for nut at top

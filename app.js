@@ -245,7 +245,6 @@ document.addEventListener('DOMContentLoaded', () => {
     detailPanel.innerHTML = `
       <div class="detail-header">
         <div class="detail-pos-name">${pos.label}</div>
-        <div class="detail-pos-sub">${pos.description}</div>
       </div>
 
       <div class="detail-card">

@@ -5,6 +5,10 @@ Accordeur & carte des positions de contrebasse — application web mobile.
 
 ## Changelog
 
+### v1.4
+- Sillet rétabli dans sa forme originale (barre fine 24 px, lettre de corde)
+- Suppression de l'explication sur les demi-tons dans le panneau détail
+
 ### v1.3
 - Canvas du manche élargi (130 → 180 px) sans modifier la hauteur
 - Chaque note affiche désormais son nom anglais (C D E F G...) en plus du solfège français (Do Ré Mi...)

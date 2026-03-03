@@ -43,13 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
     G2: 'Corde de Sol (G2)',
   };
 
-  // ── Hz buttons ──────────────────────────────────────
-  document.querySelectorAll('.btn-setting').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.btn-setting').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      Tuner.setRefHz(parseInt(btn.dataset.hz));
-    });
+  // ── Hz select ───────────────────────────────────────
+  document.getElementById('ref-hz-select').addEventListener('change', e => {
+    Tuner.setRefHz(parseInt(e.target.value));
   });
 
   // ── Mode buttons ─────────────────────────────────────

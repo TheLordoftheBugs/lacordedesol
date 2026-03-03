@@ -1,44 +1,32 @@
-# lacordedesol
+# La Corde de Sol
 Accordeur & carte des positions de contrebasse — application web mobile.
 
 ---
 
-## Changelog
+## Guide d'utilisation
 
-### v1.4
-- Sillet rétabli dans sa forme originale (barre fine 24 px, lettre de corde)
-- Suppression de l'explication sur les demi-tons dans le panneau détail
+### Accordeur
 
-### v1.3
-- Canvas du manche élargi (130 → 180 px) sans modifier la hauteur
-- Chaque note affiche désormais son nom anglais (C D E F G...) en plus du solfège français (Do Ré Mi...)
-- Suppression des sections "Doigtés" et "Repère de distance" du panneau détail
-- Suppression des repères de distance "0 cm — tête de manche" dans la zone sillet
+1. Sélectionne ta corde (Mi, La, Ré ou Sol) en bas de l'écran.
+2. Active le micro en appuyant sur **Activer le micro**.
+3. Joue ta corde — l'aiguille indique si tu es juste, trop bas ou trop haut.
+4. Ajuste la tension jusqu'à ce que l'indicateur passe au vert.
 
-### v1.2
-- Zone sillet agrandie à la moitié du canvas total (576 px)
-- Affichage de la note à vide, de la fréquence et d'un cercle "O" dans la zone sillet
-- La zone sillet change dynamiquement selon la corde sélectionnée
+**Détection automatique** : laisse l'app reconnaître la corde jouée toute seule (activée par défaut).
 
-### v1.1
-- Remplacement du timestamp de build (date/heure) par un numéro de version incrémental
+**La de référence** : modifie la fréquence du La (438–450 Hz) selon les exigences de ton ensemble.
+
+**Mode Pizz. / Archet** : optimise l'analyse selon ton attaque.
 
 ---
 
-## Historique des commits
+### Carte des positions
 
-| Commit | Description |
-|--------|-------------|
-| `75c56fd` | v1.3 — canvas plus large, noms EN, suppression sections distance/doigtés |
-| `83b80c3` | v1.2 — sillet zone prend la moitié du canvas |
-| `78e6bda` | v1.1 — numéro de version à la place de la date |
-| `fe627f6` | Fix : alignement boutons mode et sélecteur Hz à 32 px |
-| `86ca495` | Ajout du stamp de build sous le bouton micro |
-| `f56bb1b` | UI : alignement hauteur dropdown, texte boutons cordes agrandi |
-| `8e96e17` | UI : boutons cordes plus grands + dropdown stylisé |
-| `66a1ed5` | Boutons cordes : chiffres romains + noms de notes bilingues |
-| `b6af771` | Remplacement des boutons Hz par un select 438–450 Hz |
-| `2ca1f20` | Suppression du setup Capacitor — focus web app |
-| `c8a9052` | Ajout du setup Capacitor (iOS/Android) |
-| `d09ba90` | MVP complet : accordeur + carte des positions |
-| `f949902` | Initial commit |
+1. Va dans l'onglet **Positions**.
+2. Sélectionne ta corde en haut.
+3. Tape sur un bloc de position pour voir les notes disponibles.
+4. Appuie sur une note pour écouter la référence sonore.
+
+Chaque note est affichée en **solfège** (Do, Ré, Mi…) et en **notation anglaise** (C, D, E…).
+
+**Repères visuels** : active le toggle pour voir les points de doigts sur le manche.

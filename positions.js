@@ -139,9 +139,10 @@ const Positions = (() => {
 
   // ── Canvas layout constants ───────────────────────────
   const NECK_WIDTH  = 130;
-  const NUT_HEIGHT  = 24;   // space for nut at top
   const POS_HEIGHT  = 72;   // px per position block
-  const NECK_TOTAL  = NUT_HEIGHT + POSITION_DATA.length * POS_HEIGHT + 20;
+  const POS_TOTAL   = POSITION_DATA.length * POS_HEIGHT; // 576px
+  const NUT_HEIGHT  = POS_TOTAL;  // sillet zone = same height → exactly half the canvas
+  const NECK_TOTAL  = NUT_HEIGHT + POS_TOTAL + 20;
 
   // ── State ─────────────────────────────────────────────
   let canvas      = null;
@@ -175,21 +176,67 @@ const Positions = (() => {
     ctx2d.fillStyle = grad;
     ctx2d.fillRect(neckL, NUT_HEIGHT, neckW, H - NUT_HEIGHT - 10);
 
-    // Nut
+    // ── Sillet zone background ────────────────────────────
+    const silletGrad = ctx2d.createLinearGradient(neckL, 0, neckR, 0);
+    silletGrad.addColorStop(0,   '#1a1030');
+    silletGrad.addColorStop(0.5, '#231848');
+    silletGrad.addColorStop(1,   '#1a1030');
+    ctx2d.fillStyle = silletGrad;
+    ctx2d.fillRect(neckL, 0, neckW, NUT_HEIGHT - 6);
+
+    // Sillet zone title
+    ctx2d.fillStyle = '#b0a0d0';
+    ctx2d.font = 'bold 10px sans-serif';
+    ctx2d.textAlign = 'center';
+    ctx2d.fillText('SILLET', W / 2, 18);
+
+    // Open string label (corde à vide)
+    const openMidi = OPEN_MIDI[currentStr];
+    const openName = midiToName(openMidi);
+    const openFreq = Math.round(midiToFreq(openMidi) * 10) / 10;
+
+    ctx2d.fillStyle = '#d4c5a9';
+    ctx2d.font = 'bold 42px sans-serif';
+    ctx2d.textAlign = 'center';
+    ctx2d.fillText(openName, W / 2, NUT_HEIGHT * 0.30);
+
+    ctx2d.fillStyle = 'rgba(180,170,210,0.7)';
+    ctx2d.font = '12px sans-serif';
+    ctx2d.fillText('corde à vide', W / 2, NUT_HEIGHT * 0.30 + 20);
+
+    ctx2d.fillStyle = 'rgba(140,210,140,0.85)';
+    ctx2d.font = 'bold 13px sans-serif';
+    ctx2d.fillText(openFreq + ' Hz', W / 2, NUT_HEIGHT * 0.30 + 40);
+
+    // Open string circle on string line (drawn here so it appears above the neck wood)
+    ctx2d.beginPath();
+    ctx2d.arc(neckL + neckW * 0.55, NUT_HEIGHT * 0.65, 14, 0, Math.PI * 2);
+    ctx2d.strokeStyle = 'rgba(200,185,140,0.9)';
+    ctx2d.lineWidth = 2;
+    ctx2d.stroke();
+    ctx2d.fillStyle = 'rgba(40,30,60,0.85)';
+    ctx2d.fill();
+    ctx2d.fillStyle = '#d4c5a9';
+    ctx2d.font = 'bold 10px sans-serif';
+    ctx2d.textAlign = 'center';
+    ctx2d.fillText('O', neckL + neckW * 0.55, NUT_HEIGHT * 0.65 + 4);
+
+    // Distance info
+    ctx2d.fillStyle = 'rgba(130,120,160,0.8)';
+    ctx2d.font = '9px sans-serif';
+    ctx2d.fillText('0 cm — tête de manche', W / 2, NUT_HEIGHT * 0.85);
+    ctx2d.fillText('corde ' + currentStr, W / 2, NUT_HEIGHT * 0.85 + 14);
+
+    // Nut bar (at bottom of sillet zone)
     ctx2d.fillStyle = '#d4c5a9';
     ctx2d.fillRect(neckL - 2, NUT_HEIGHT - 6, neckW + 4, 8);
-    ctx2d.fillStyle = '#111';
-    ctx2d.font = 'bold 9px sans-serif';
-    ctx2d.textAlign = 'center';
-    ctx2d.fillStyle = '#9090b0';
-    ctx2d.fillText('SILLET', W / 2, NUT_HEIGHT - 8);
 
-    // String line
+    // String line (full height, from top)
     const strX = neckL + neckW * 0.55;
     ctx2d.strokeStyle = 'rgba(200,185,140,0.6)';
     ctx2d.lineWidth = 2.5;
     ctx2d.beginPath();
-    ctx2d.moveTo(strX, NUT_HEIGHT);
+    ctx2d.moveTo(strX, 28);
     ctx2d.lineTo(strX, H - 10);
     ctx2d.stroke();
 
@@ -247,11 +294,11 @@ const Positions = (() => {
       }
     });
 
-    // Open string label
-    ctx2d.fillStyle = '#d4c5a9';
-    ctx2d.font = 'bold 11px sans-serif';
+    // String letter above nut bar (small reminder)
+    ctx2d.fillStyle = 'rgba(200,185,140,0.5)';
+    ctx2d.font = 'bold 9px sans-serif';
     ctx2d.textAlign = 'center';
-    ctx2d.fillText(currentStr, strX, NUT_HEIGHT - 9);
+    ctx2d.fillText(currentStr, strX, NUT_HEIGHT - 10);
 
     // Tolerance zone indicator (visual markers)
     if (visualMode && selectedPos) {

@@ -545,3 +545,13 @@ html, body {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* Build stamp */
+.build-stamp {
+  margin-top: 10px;
+  font-size: .7rem;
+  color: var(--text2);
+  opacity: .45;
+  text-align: center;
+  letter-spacing: .06em;
+}

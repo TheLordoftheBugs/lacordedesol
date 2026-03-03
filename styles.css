@@ -64,8 +64,7 @@ html, body {
 }
 
 #tab-tuner {
-  width: 360px;
-  flex-shrink: 0;
+  flex: 1;
   border-right: 1px solid var(--border);
 }
 
@@ -87,6 +86,9 @@ html, body {
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 /* ── Tuner Settings bar ──────────────────────────────────── */

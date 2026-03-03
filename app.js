@@ -199,17 +199,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const neckCanvas   = document.getElementById('neck-canvas');
   const detailPanel  = document.getElementById('position-detail');
-  const tooltip      = document.getElementById('neck-tooltip');
-  const visualToggle = document.getElementById('visual-markers-toggle');
-  let playingCard    = null;
+  const tooltip   = document.getElementById('neck-tooltip');
+  let playingCard = null;
 
   Positions.init(neckCanvas, detailPanel, (posData, notes) => {
     renderDetail(posData, notes);
-  });
-
-  // Visual markers toggle
-  visualToggle.addEventListener('change', () => {
-    Positions.setVisualMarkers(visualToggle.checked);
   });
 
   // ── Render position detail ────────────────────────────

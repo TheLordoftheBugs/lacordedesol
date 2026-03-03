@@ -5,6 +5,12 @@ Accordeur & carte des positions de contrebasse — application web mobile.
 
 ## Changelog
 
+### v1.3
+- Canvas du manche élargi (130 → 180 px) sans modifier la hauteur
+- Chaque note affiche désormais son nom anglais (C D E F G...) en plus du solfège français (Do Ré Mi...)
+- Suppression des sections "Doigtés" et "Repère de distance" du panneau détail
+- Suppression des repères de distance "0 cm — tête de manche" dans la zone sillet
+
 ### v1.2
 - Zone sillet agrandie à la moitié du canvas total (576 px)
 - Affichage de la note à vide, de la fréquence et d'un cercle "O" dans la zone sillet
@@ -19,6 +25,7 @@ Accordeur & carte des positions de contrebasse — application web mobile.
 
 | Commit | Description |
 |--------|-------------|
+| `en cours` | v1.3 — canvas plus large, noms EN, suppression sections distance/doigtés |
 | `83b80c3` | v1.2 — sillet zone prend la moitié du canvas |
 | `78e6bda` | v1.1 — numéro de version à la place de la date |
 | `fe627f6` | Fix : alignement boutons mode et sélecteur Hz à 32 px |

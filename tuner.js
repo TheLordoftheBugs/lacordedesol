@@ -25,9 +25,10 @@ const Tuner = (() => {
   let isRunning  = false;
 
   // Config
-  let refHz       = 440;
+  let refHz       = 442;
   let targetString = 'G2'; // default
   let autoDetect  = true;
+  let targetFreqOverride = null;
 
   // Rolling average for stability (3 s window at ~30 fps → ~90 samples)
   const HISTORY_SIZE = 90;
@@ -167,10 +168,12 @@ const Tuner = (() => {
             info.string = targetString;
           }
 
-          // Target cents: compare to expected string open note
+          // Target cents: compare to target note (or open string if no override)
           const refs = getStringRefs();
           const refStr = info.string || targetString;
-          const refFreq = refs[refStr] || refs.G2;
+          const refFreq = targetFreqOverride !== null
+            ? targetFreqOverride
+            : (refs[refStr] || refs.G2);
           const centsFromTarget = 1200 * Math.log2(freq / refFreq);
 
           // Normalise to nearest semitone of the target note
@@ -246,6 +249,7 @@ const Tuner = (() => {
   function setOnNote(fn)       { onNote = fn; }
   function setOnSilence(fn)    { onSilence = fn; }
   function getIsRunning()      { return isRunning; }
+  function setTargetFreq(f)    { targetFreqOverride = f; centsHistory = []; }
 
-  return { start, stop, setRefHz, setTargetString, setAutoDetect, setOnNote, setOnSilence, getIsRunning, freqToNoteInfo };
+  return { start, stop, setRefHz, setTargetString, setAutoDetect, setTargetFreq, setOnNote, setOnSilence, getIsRunning, freqToNoteInfo };
 })();

@@ -523,14 +523,10 @@ html, body {
   border-color: var(--accent);
   background: rgba(124,106,247,.15);
 }
-.note-card.playing {
-  border-color: var(--green);
-  background: rgba(39,174,96,.15);
-  animation: pulse-green .6s ease-in-out infinite alternate;
-}
-@keyframes pulse-green {
-  from { box-shadow: 0 0 0 0 rgba(39,174,96,0); }
-  to   { box-shadow: 0 0 0 6px rgba(39,174,96,.25); }
+.note-card.targeted {
+  border-color: var(--accent);
+  background: rgba(124,106,247,.22);
+  box-shadow: 0 0 0 2px rgba(124,106,247,.35);
 }
 .note-card-name    { font-size: 1.1rem; font-weight: 700; }
 .note-card-name-en { font-size: .75rem; color: #d4b86a; font-weight: 600; }

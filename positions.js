@@ -378,6 +378,7 @@ const Positions = (() => {
   function getOpenStringNote(str, aRef = 440) {
     const midi = OPEN_MIDI[str];
     return {
+      midi,
       name:   midiToName(midi),
       nameEN: midiToNameEN(midi),
       freq:   Math.round(midiToFreq(midi, aRef) * 10) / 10,

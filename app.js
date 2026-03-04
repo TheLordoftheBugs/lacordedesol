@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.btn-mode').forEach(b => {
       b.classList.toggle('active', b.dataset.mode === 'arco');
     });
+    targetMidi = null;
+    Tuner.setTargetFreq(null);
     refreshDetailPanel();
   });
 
@@ -109,21 +111,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Tuner callbacks ──────────────────────────────────
   Tuner.setOnNote(info => {
-    const { cents, freq, nameWithOctave, string, stability, avgCents } = info;
+    const { cents, centsFromTarget, freq, nameWithOctave, string, stability, avgCents } = info;
+
+    // When a note is targeted, use deviation from that note for needle + display
+    const activeCents = targetMidi !== null ? Math.round(centsFromTarget) : cents;
 
     // Note name
     noteName.textContent = nameWithOctave;
     noteFreqEl.textContent = freq.toFixed(1) + ' Hz';
-    stringLabel.textContent = string ? STRING_LABELS[string] || string : '';
+
+    if (targetMidi !== null) {
+      const targeted = detailPanel.querySelector('.note-card.targeted');
+      stringLabel.textContent = targeted ? `Cible : ${targeted.dataset.name}` : '';
+    } else {
+      stringLabel.textContent = string ? STRING_LABELS[string] || string : '';
+    }
 
     // Needle
-    needleTarget = centsToAngle(cents);
+    needleTarget = centsToAngle(activeCents);
 
     // Cents display
-    centsValueEl.textContent = (cents >= 0 ? '+' : '') + cents;
+    centsValueEl.textContent = (activeCents >= 0 ? '+' : '') + activeCents;
 
     // Status
-    const absCents = Math.abs(cents);
+    const absCents = Math.abs(activeCents);
     let statusClass, statusMsg;
     if (absCents <= 5) {
       statusClass = 'in-tune';
@@ -212,11 +223,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const neckCanvas   = document.getElementById('neck-canvas');
   const detailPanel  = document.getElementById('position-detail');
   const tooltip   = document.getElementById('neck-tooltip');
-  let playingCard = null;
+  let targetMidi = null;
+
+  // ── Wire note cards → set as tuner target ────────────
+  function wireNoteCards(preserveTarget = false) {
+    if (!preserveTarget) {
+      targetMidi = null;
+      Tuner.setTargetFreq(null);
+    }
+    detailPanel.querySelectorAll('.note-card').forEach(card => {
+      const midi = parseInt(card.dataset.midi);
+      const freq = parseFloat(card.dataset.freq);
+      if (targetMidi !== null && midi === targetMidi) {
+        card.classList.add('targeted');
+        Tuner.setTargetFreq(freq); // update freq for current aRef
+      }
+      card.addEventListener('click', () => {
+        detailPanel.querySelectorAll('.note-card').forEach(c => c.classList.remove('targeted'));
+        if (targetMidi === midi) {
+          targetMidi = null;
+          Tuner.setTargetFreq(null);
+        } else {
+          card.classList.add('targeted');
+          targetMidi = midi;
+          Tuner.setTargetFreq(freq);
+        }
+      });
+    });
+  }
 
   Positions.init(neckCanvas, detailPanel, (posData, str) => {
     panelState = { type: 'position', pos: posData, str };
-    renderDetail(posData, Positions.getPositionNotes(posData, str, currentARef));
+    renderDetail(posData, Positions.getPositionNotes(posData, str, currentARef)); // wireNoteCards(false) inside
   });
   renderOpenString('G');
 
@@ -228,14 +266,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Refresh panel after aRef change ──────────────────
   function refreshDetailPanel() {
     if (panelState.type === 'open') {
-      renderOpenString(panelState.str);
+      renderOpenString(panelState.str, true);
     } else {
-      renderDetail(panelState.pos, Positions.getPositionNotes(panelState.pos, panelState.str, currentARef));
+      renderDetail(panelState.pos, Positions.getPositionNotes(panelState.pos, panelState.str, currentARef), true);
     }
   }
 
   // ── Render open string (default state) ───────────────
-  function renderOpenString(str) {
+  function renderOpenString(str, preserveTarget = false) {
     panelState = { type: 'open', str };
     const note = Positions.getOpenStringNote(str, currentARef);
     detailPanel.innerHTML = `
@@ -245,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="detail-card">
         <div class="detail-card-title">Corde à vide</div>
         <div class="notes-grid">
-          <div class="note-card" data-freq="${note.freq}" data-name="${note.name}">
+          <div class="note-card" data-freq="${note.freq}" data-midi="${note.midi}" data-name="${note.name}">
             <div class="note-card-name">${note.name}</div>
             <div class="note-card-name-en">${note.nameEN}</div>
             <div class="note-card-freq">${note.freq} Hz</div>
@@ -253,37 +291,16 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <div style="font-size:.72rem;color:var(--text2);margin-top:8px;">
-          Tapez une note pour écouter la référence
+          Tapez une note pour la cibler à l'accordeur
         </div>
       </div>`;
-    detailPanel.querySelectorAll('.note-card').forEach(card => {
-      card.addEventListener('click', () => {
-        if (playingCard) playingCard.classList.remove('playing');
-        AudioPlayer.stop();
-        if (playingCard === card) { playingCard = null; return; }
-        card.classList.add('playing');
-        playingCard = card;
-        AudioPlayer.playFreq(parseFloat(card.dataset.freq), 3, currentMode);
-        setTimeout(() => {
-          card.classList.remove('playing');
-          if (playingCard === card) playingCard = null;
-        }, 3100);
-      });
-    });
+    wireNoteCards(preserveTarget);
   }
 
   // ── Render position detail ────────────────────────────
-  function renderDetail(pos, notes) {
-    // Build fingering HTML
-    const fingerHTML = pos.fingering.map((f, i) => `
-      <div class="finger-chip">
-        <span class="finger-num">${f.finger}</span>
-        <span class="finger-note">${notes[i] ? notes[i].name : ''}</span>
-      </div>`).join('');
-
-    // Build notes grid HTML
+  function renderDetail(pos, notes, preserveTarget = false) {
     const notesHTML = notes.map(n => `
-      <div class="note-card" data-freq="${n.freq}" data-name="${n.name}">
+      <div class="note-card" data-freq="${n.freq}" data-midi="${n.midi}" data-name="${n.name}">
         <div class="note-card-name">${n.name}</div>
         <div class="note-card-name-en">${n.nameEN}</div>
         <div class="note-card-freq">${n.freq} Hz</div>
@@ -294,36 +311,15 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="detail-header">
         <div class="detail-pos-name">${pos.label}</div>
       </div>
-
       <div class="detail-card">
         <div class="detail-card-title">Notes disponibles</div>
         <div class="notes-grid">${notesHTML}</div>
         <div style="font-size:.72rem;color:var(--text2);margin-top:8px;">
-          Tapez une note pour écouter la référence
+          Tapez une note pour la cibler à l'accordeur
         </div>
-      </div>
+      </div>`;
 
-    `;
-
-    // Note card click → play audio
-    detailPanel.querySelectorAll('.note-card').forEach(card => {
-      card.addEventListener('click', () => {
-        if (playingCard) playingCard.classList.remove('playing');
-        AudioPlayer.stop();
-        if (playingCard === card) {
-          playingCard = null;
-          return;
-        }
-        card.classList.add('playing');
-        playingCard = card;
-        const freq = parseFloat(card.dataset.freq);
-        AudioPlayer.playFreq(freq, 3, currentMode);
-        setTimeout(() => {
-          card.classList.remove('playing');
-          if (playingCard === card) playingCard = null;
-        }, 3100);
-      });
-    });
+    wireNoteCards(preserveTarget);
   }
 
 });

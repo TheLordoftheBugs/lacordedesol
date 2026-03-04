@@ -417,7 +417,7 @@ html, body {
 /* Neck canvas */
 .neck-container {
   position: relative;
-  width: 180px;
+  width: 220px;
   flex-shrink: 0;
   background: var(--bg2);
   border-right: 1px solid var(--border);

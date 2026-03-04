@@ -341,8 +341,7 @@ const Positions = (() => {
       if (!pos) return;
       selectedPos = pos;
       draw();
-      const notes = getPositionNotes(pos, currentStr);
-      onSelect && onSelect(pos, notes);
+      onSelect && onSelect(pos, currentStr);
     });
 
     // Touch support
@@ -355,8 +354,7 @@ const Positions = (() => {
       if (!pos) return;
       selectedPos = pos;
       draw();
-      const notes = getPositionNotes(pos, currentStr);
-      onSelect && onSelect(pos, notes);
+      onSelect && onSelect(pos, currentStr);
     }, { passive: false });
 
     draw();
@@ -386,5 +384,10 @@ const Positions = (() => {
     };
   }
 
-  return { init, setString, setVisualMarkers, getPositionNotes, getPositionDataById, getOpenStringNote, POSITION_DATA };
+  function resetSelection() {
+    selectedPos = null;
+    draw();
+  }
+
+  return { init, setString, setVisualMarkers, getPositionNotes, getPositionDataById, getOpenStringNote, resetSelection, POSITION_DATA };
 })();

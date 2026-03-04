@@ -407,6 +407,19 @@ html, body {
   border-color: var(--accent);
 }
 
+.btn-reset-pos {
+  padding: 3px 11px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text2);
+  border-radius: 20px;
+  font-size: .72rem;
+  cursor: pointer;
+  transition: all .15s;
+  font-family: inherit;
+}
+.btn-reset-pos:hover { border-color: var(--accent); color: var(--accent); }
+
 .positions-layout {
   display: flex;
   flex: 1;
@@ -494,7 +507,7 @@ html, body {
 /* Notes grid */
 .notes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   gap: 8px;
 }
 .note-card {

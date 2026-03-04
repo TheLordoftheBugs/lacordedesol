@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── Mode buttons ─────────────────────────────────────
-  let currentMode = 'pizzicato';
-  let currentARef = 440;
+  let currentMode = 'arco';
+  let currentARef = 442;
   let panelState  = { type: 'open', str: 'G' };
   document.querySelectorAll('.btn-mode').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -47,6 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
       currentMode = btn.dataset.mode;
     });
+  });
+
+  // ── Reset accordeur (Hz + mode → defaults) ───────────
+  document.getElementById('reset-tuner-btn').addEventListener('click', () => {
+    currentARef = 442;
+    document.getElementById('ref-hz-select').value = '442';
+    Tuner.setRefHz(442);
+    currentMode = 'arco';
+    document.querySelectorAll('.btn-mode').forEach(b => {
+      b.classList.toggle('active', b.dataset.mode === 'arco');
+    });
+    refreshDetailPanel();
   });
 
   // ── String selector ──────────────────────────────────

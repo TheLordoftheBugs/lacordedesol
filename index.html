@@ -23,7 +23,10 @@
       <!-- MODULE 1 : ACCORDEUR -->
       <section id="tab-tuner" class="app-section">
 
-        <div class="section-title">Accordeur</div>
+        <div class="section-title">
+          Accordeur
+          <button id="reset-tuner-btn" class="btn-reset-pos">↺ Reset</button>
+        </div>
 
         <!-- Settings bar -->
         <div class="tuner-settings">
@@ -32,9 +35,9 @@
             <select id="ref-hz-select" class="ref-hz-select">
               <option value="438">438 Hz</option>
               <option value="439">439 Hz</option>
-              <option value="440" selected>440 Hz</option>
+              <option value="440">440 Hz</option>
               <option value="441">441 Hz</option>
-              <option value="442">442 Hz</option>
+              <option value="442" selected>442 Hz</option>
               <option value="443">443 Hz</option>
               <option value="444">444 Hz</option>
               <option value="445">445 Hz</option>
@@ -48,8 +51,8 @@
           <div class="setting-group">
             <label>Mode</label>
             <div class="btn-group">
-              <button class="btn-mode active" data-mode="pizzicato">🤌 Pizz.</button>
-              <button class="btn-mode" data-mode="arco">🎻 Archet</button>
+              <button class="btn-mode" data-mode="pizzicato">🤌 Pizz.</button>
+              <button class="btn-mode active" data-mode="arco">🎻 Archet</button>
             </div>
           </div>
         </div>

@@ -32,11 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Hz select ───────────────────────────────────────
   document.getElementById('ref-hz-select').addEventListener('change', e => {
-    Tuner.setRefHz(parseInt(e.target.value));
+    currentARef = parseInt(e.target.value);
+    Tuner.setRefHz(currentARef);
+    refreshDetailPanel();
   });
 
   // ── Mode buttons ─────────────────────────────────────
   let currentMode = 'pizzicato';
+  let currentARef = 440;
+  let panelState  = { type: 'open', str: 'G' };
   document.querySelectorAll('.btn-mode').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.btn-mode').forEach(b => b.classList.remove('active'));
@@ -198,14 +202,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const tooltip   = document.getElementById('neck-tooltip');
   let playingCard = null;
 
-  Positions.init(neckCanvas, detailPanel, (posData, notes) => {
-    renderDetail(posData, notes);
+  Positions.init(neckCanvas, detailPanel, (posData, str) => {
+    panelState = { type: 'position', pos: posData, str };
+    renderDetail(posData, Positions.getPositionNotes(posData, str, currentARef));
   });
   renderOpenString('G');
 
+  document.getElementById('reset-pos-btn').addEventListener('click', () => {
+    Positions.resetSelection();
+    renderOpenString(lastPosStr);
+  });
+
+  // ── Refresh panel after aRef change ──────────────────
+  function refreshDetailPanel() {
+    if (panelState.type === 'open') {
+      renderOpenString(panelState.str);
+    } else {
+      renderDetail(panelState.pos, Positions.getPositionNotes(panelState.pos, panelState.str, currentARef));
+    }
+  }
+
   // ── Render open string (default state) ───────────────
   function renderOpenString(str) {
-    const note = Positions.getOpenStringNote(str);
+    panelState = { type: 'open', str };
+    const note = Positions.getOpenStringNote(str, currentARef);
     detailPanel.innerHTML = `
       <div class="detail-header">
         <div class="detail-pos-name">Aucune position sélectionnée</div>

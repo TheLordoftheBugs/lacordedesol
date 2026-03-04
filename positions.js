@@ -127,20 +127,6 @@ const Positions = (() => {
       distanceInfo: '~14–15 cm du sillet',
     },
     {
-      id: 'p4_8',
-      label: '4.8',
-      sublabel: '4.8',
-      color: '#c0392b',
-      firstFingerSemitone: 9,
-      description: '1er doigt sur le 9e demi-ton.',
-      fingering: [
-        { finger: 1, semitone: 9 },
-        { finger: 2, semitone: 10 },
-        { finger: 4, semitone: 11 },
-      ],
-      distanceInfo: '~18–21 cm du sillet',
-    },
-    {
       id: 'p5_8',
       label: '5.8',
       sublabel: '5.8',

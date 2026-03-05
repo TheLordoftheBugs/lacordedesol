@@ -506,16 +506,18 @@ html, body {
 
 /* Notes grid */
 .notes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 .note-card {
   background: var(--bg3);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 8px 6px;
-  text-align: center;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   cursor: pointer;
   transition: all .15s;
 }
@@ -528,10 +530,12 @@ html, body {
   background: rgba(124,106,247,.22);
   box-shadow: 0 0 0 2px rgba(124,106,247,.35);
 }
+.note-card-left  { display: flex; flex-direction: column; }
+.note-card-right { display: flex; flex-direction: column; align-items: flex-end; }
 .note-card-name    { font-size: 1.1rem; font-weight: 700; }
 .note-card-name-en { font-size: .75rem; color: #d4b86a; font-weight: 600; }
-.note-card-freq   { font-size: .65rem; color: var(--text2); margin-top: 2px; }
-.note-card-finger { font-size: .7rem; color: var(--accent); margin-top: 3px; font-weight: 600; }
+.note-card-freq   { font-size: .65rem; color: var(--text2); }
+.note-card-finger { font-size: .7rem; color: var(--accent); font-weight: 600; margin-top: 2px; }
 
 /* Fingering display */
 .fingering-row {

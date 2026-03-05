@@ -301,10 +301,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderDetail(pos, notes, preserveTarget = false) {
     const notesHTML = notes.map(n => `
       <div class="note-card" data-freq="${n.freq}" data-midi="${n.midi}" data-name="${n.name}">
-        <div class="note-card-name">${n.name}</div>
-        <div class="note-card-name-en">${n.nameEN}</div>
-        <div class="note-card-freq">${n.freq} Hz</div>
-        <div class="note-card-finger">Doigt ${n.finger}</div>
+        <div class="note-card-left">
+          <div class="note-card-name">${n.name}</div>
+          <div class="note-card-name-en">${n.nameEN}</div>
+        </div>
+        <div class="note-card-right">
+          <div class="note-card-freq">${n.freq} Hz</div>
+          <div class="note-card-finger">Doigt ${n.finger}</div>
+        </div>
       </div>`).join('');
 
     detailPanel.innerHTML = `

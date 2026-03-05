@@ -1,1 +1,1 @@
-const BUILD = "v2.5";
+const BUILD = "v2.6";

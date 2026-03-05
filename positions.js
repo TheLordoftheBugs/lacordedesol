@@ -136,7 +136,7 @@ const Positions = (() => {
       fingering: [
         { finger: 1, semitone: 8 },
         { finger: 2, semitone: 9 },
-        { finger: 3, semitone: 10 },
+        { finger: 4, semitone: 10 },
       ],
       distanceInfo: '~22–24 cm du sillet',
     },
@@ -150,7 +150,7 @@ const Positions = (() => {
       fingering: [
         { finger: 1, semitone: 9 },
         { finger: 2, semitone: 10 },
-        { finger: 3, semitone: 11 },
+        { finger: 4, semitone: 11 },
       ],
       distanceInfo: '~25–27 cm du sillet',
     },
